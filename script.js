@@ -16,7 +16,22 @@ window.addEventListener("load", () => {
       long = position.coords.longitude;
       lat = position.coords.latitude;
 
-      const api = ``;
+      const proxy = "https://cors-anywhere.herokuapp.com/";
+      const api = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid={API key}`;
+
+      fetch(api)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const { name } = data;
+          const { feels_like } = data.main;
+          const { id, main } = data.weather[0];
+
+          loc.textContent = name;
+          climate.textContent = main;
+          tempvalue.textContent = Math.round(feels_like - 273);
+        });
     });
   }
 });
