@@ -2,9 +2,8 @@ let loc = document.getElementById("location");
 let tempicon = document.getElementById("temp-icon");
 let tempvalue = document.getElementById("temp-value");
 let climate = document.getElementById("climate");
-
 let iconfile;
-const searchInput = document.getElementById("serach-input");
+const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 
 searchButton.addEventListener("click", (e) => {
@@ -55,14 +54,15 @@ window.addEventListener("load", () => {
     navigator.geolocation.getCurrentPosition((position) => {
       long = position.coords.longitude;
       lat = position.coords.latitude;
-
       const proxy = "https://cors-anywhere.herokuapp.com/";
-      const api = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid={API key}`;
+
+      const api = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=dab3af44de7d24ae7ff86549334e45bd     `;
 
       fetch(api)
         .then((response) => {
           return response.json();
         })
+
         .then((data) => {
           const { name } = data;
           const { feels_like } = data.main;
@@ -71,7 +71,6 @@ window.addEventListener("load", () => {
           loc.textContent = name;
           climate.textContent = main;
           tempvalue.textContent = Math.round(feels_like - 273);
-
           if (id < 300 && id > 200) {
             tempicon.src = "./icons/thunderstorm.svg";
           } else if (id < 400 && id > 300) {
